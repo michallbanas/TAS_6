@@ -1,5 +1,12 @@
 {
+  "name": "test-automation-starter-pack-6",
+  "version": "1.0.0",
+  "description": "Test Automation Starter Pack 6",
+  "scripts": {
+    "format": "prettier --write \"**/*.{js,mjs,ts,tsx,json}\""
+  },
   "devDependencies": {
-    "cypress": "^13.6.6"
+    "cypress": "^13.6.6",
+    "prettier": "^3.2.5"
   }
 }
