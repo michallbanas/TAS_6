@@ -29,18 +29,18 @@ Dokumentácia: [cy.visit()](https://docs.cypress.io/api/commands/visit.html)
 Dokumentácia: [cy.get()](https://docs.cypress.io/api/commands/get.html)  
 💡 Hint: čo je DOM? - DOM znamená Document Object Model, čo je reprezentácia HTML stránky v pamäti prehliadača [DOM - Document Object Model](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
 
-## 1.4 - `cy.click()`
+## 1.4 - `click()`
 
-- `cy.click()` je príkaz, ktorý slúži na kliknutie na element
-- `cy.click()` nemá žiadne parametre, ale za to má optionálne parametre, napr:
+- `click()` je príkaz, ktorý slúži na kliknutie na element
+- `click()` nemá žiadne parametre, ale za to má optionálne parametre, napr:
   - `{ force: true }` - slúži na ignorovanie DOM elementu, ktorý je disabled alebo hidden
 
-Documentácia: [cy.click()](https://docs.cypress.io/api/commands/click.html)  
+Documentácia: [click()](https://docs.cypress.io/api/commands/click.html)  
 
 ## 1.5 - Overenie textu
 
 - `should("have.text", "text")` slúži na overenie textu elementu (text sa musí byť identický) 
-- `should("contain", "text")` slúži na overenie, či element obsahuje text (text sa musí nachádzať v elemente)
+- `should("contain.text", "text")` slúži na overenie, či element obsahuje text (text sa musí nachádzať v elemente)
 
 Dokumentácia:
 - [should()](https://docs.cypress.io/api/commands/should.html)
@@ -69,7 +69,7 @@ Dokumentácia:
 
 - `cy.get("#id")` - hľadanie elementu podľa id
 - `cy.get(".class")` - hľadanie elementu podľa class
-- `cy.get("[data-test=selector]")` - hľadanie elementu podľa data-test atribútu
+- `cy.get("[data-test='selector']")` - hľadanie elementu podľa data-test atribútu
 
 Dokumentácia:
 - [Selectors](https://docs.cypress.io/api/commands/get#Selector)
