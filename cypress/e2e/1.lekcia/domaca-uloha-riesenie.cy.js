@@ -22,4 +22,11 @@ describe("Lekcia 1: QUOTE GENERATOR", () => {
     cy.get("[data-test='get-quote']").click().click()
     cy.get(".quote-list li").should("have.length", "2")
   })
+
+  it('Overte 2 quotes pomocou for cyklu', () => {
+    for (let i = 0; i < 2; i++) {
+      cy.get("[data-test='get-quote']").click()
+    }
+    cy.get(".quote-list li").should("have.length", 2)
+  })
 })
