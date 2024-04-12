@@ -51,7 +51,7 @@ describe("Gringottbank", () => {
     cy.get('div.modal-dialog')
       .should("be.visible")
       .within(() => {
-        cy.get(".your-data").contains("p", "Name").find("span").should("have.text", "Jozo")
+        cy.get(".modal-body").contains("p", "Name").should("contain.text", "Jozo")
       })
   })
 })
