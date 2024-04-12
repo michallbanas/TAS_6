@@ -32,7 +32,7 @@ describe("Gringottbank", () => {
       .and("contain.text", "Phoenix Feather Portfolio")
   })
 
-  it.only("correct name is stored in new investment", () => {
+  it("correct name is stored in new investment", () => {
     cy.get("#selectedFund").select("Phoenix Feather Portfolio")
     cy.get("#oneTimeInvestment").type(15000)
     cy.get("#years").type(12)
@@ -48,7 +48,7 @@ describe("Gringottbank", () => {
         cy.contains("button", "View Details").click()
       })
 
-    cy.get('[data-test="investment-modal"]')
+    cy.get('div.modal-dialog')
       .should("be.visible")
       .within(() => {
         cy.get(".your-data").contains("p", "Name").find("span").should("have.text", "Jozo")
