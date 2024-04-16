@@ -8,15 +8,32 @@
 - `let` - premenná, ktorá sa dá zmeniť
 - `var` - starý spôsob definovania premenných, nepoužíva sa
 
+```javascript
+const a = 5;
+let b = 10;
+
+a = 10; // error pretože konštantu nemožno zmeniť
+b = 15; // ok pretože let môžeme zmeniť
+
+```
+
 ## 3.2 - Javascript - funkcie
 
 - Funkcie sú súbor kódu, ktorý môžeme zavolať viackrát
 - Funkcie môžu prijímať parametre a vracať hodnoty
 
 ```javascript
-function add(a, b) {
-  return a + b;
+funkcia logName() {
+  console.log('Michaela');
 }
+```
+
+```javascript
+funkcia logNameWithParameter(name) {
+  console.log(name)
+}
+
+logNameWithParameter('Michaela');
 ```
 
 ## 3.3 - Javascript - cyklus
@@ -25,7 +42,7 @@ function add(a, b) {
 
 ```javascript
 for (let i = 0; i < 10; i++) {
-  console.log(i);
+  console.log(i); // vypíše čísla od 0 do 9
 }
 ```
 
