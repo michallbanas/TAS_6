@@ -1,3 +1,5 @@
+/// <reference types= "cypress">
+
 describe("testing of search form", () => {
   it("should test search form and btns", () => {
     //TODO:
