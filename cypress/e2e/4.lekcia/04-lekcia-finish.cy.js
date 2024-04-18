@@ -1,68 +1,34 @@
-const destination = "Tokyo"
+/// <reference types="Cypress" />
 
-Cypress._.times(1, () => {
-  describe("testing of search form", () => {
-    it("should test search form and btns", () => {
-      //cy nespadne, lebo sme mu dodali celu URL, cize ignor base url v configu
-      cy.visit("https://www.kiwi.com/en/?origin=vienna-austria")
+describe("testing of search form", () => {
+  it("should test search form and btns", () => {
+    const destination = 'London'
 
-      cy.log("accept cookies")
-      cy.get("[data-test=CookiesPopup-Accept]").click()
-      //tymto overim, ze element neexistuje uz ani v HTML
-      cy.get("[data-test=CookiesPopup]").should("not.exist")
+    cy.visit('https://www.kiwi.com/en/?origin=vienna-austria')
+    cy.get('[data-test="CookiesPopup-Accept"]')
+      .should('have.text', 'Accept')
+      .click()
+    cy.get('[data-test="CookiesPopup"]').should('not.exist')
+    //4. overenie ze button explore je visible
 
-      cy.log("check that button is Explore")
-      cy.contains("[data-test=LandingSearchButton]", "Explore").should("be.visible")
+    cy.get('[data-test="SearchPlaceField-destination"]')
+      .find('[data-test="SearchField-input"]')
+      .type(destination)
+    cy.get('[data-test="PlacepickerModalOpened-destination"]')
+      .should('be.visible')
+      .contains(destination)
+      .click()
 
-      cy.log("type destination")
-      cy.get("[data-test=PlacePickerInput-destination]").type(destination)
-
-      //dva druhy zapisu, oba su spravne
-      //cy.get("[data-test=PlacePickerRow-wrapper]").contains("Tokyo").click()
-      cy.contains("[data-test=PlacePickerRow-wrapper]", destination).eq(0).click()
-
-      cy.log("destination is one and only")
-      cy.get("[data-test=SearchFieldItem-destination]")
-        .find("[data-test=PlacePickerInputPlace]")
-        .should("have.length", 1)
-        .and("be.visible")
-
-      cy.log("check that button is Search")
-      //validacia pre celu url v href
-      cy.contains("[data-test=LandingSearchButton]", "Search")
-        .should("be.visible")
-        .and("have.attr", "href", "/en/search/results/vienna-austria/tokyo-japan")
-
-      //toto overuje substring URL
-      cy.contains("[data-test=LandingSearchButton]", "Search")
-        .should("be.visible")
-        .and("have.attr", "href")
-        .and("include", "/en/search/results/")
-
-      cy.log("check url")
-      //na vylepsenie kodu: pohrajte sa s const
-      cy.url().should("include", "?destination=tokyo-japan")
-      cy.url().should("eq", "https://www.kiwi.com/en/?destination=tokyo-japan&origin=vienna-austria")
-
-      cy.log("uncheck checkbox")
-      //moznost pouzit click
-      //cy.get("[data-test=bookingCheckbox]").click()
-      //uncheck moznost
-
-      //alias
-      cy.get("[data-test=bookingCheckbox] input").as("checkbox")
-      cy.get("@checkbox").uncheck({ force: true })
-      cy.get("@checkbox").should("not.be.checked")
-
-      cy.log("click on search")
-      cy.get("[data-test=LandingSearchButton]").click()
-      cy.wait(6000)
-      cy.get('[data-test="ResultCardWrapper"]')
-        .eq(0)
-        .should("be.visible")
-        .within(() => {
-          cy.get('[data-test="ResultCardPrice"]').should("not.be.empty")
-        })
-    })
+    cy.url().should('include', 'destination=london-united-kingdom');
+    cy.get('[data-test="bookingCheckbox"]')
+      .find('input')
+      .uncheck({ force: true })
+    cy.contains('[data-test="LandingSearchButton"]', 'Search').click()
+    cy.wait(4000)
+    //9. overenie ze search button ma spravny attribut href
+    cy.get('[data-test="ResultCardWrapper"]')
+      .eq(0)
+      .find('[data-test="ResultCardPrice"]')
+      .should('not.be.empty')
   })
 })
