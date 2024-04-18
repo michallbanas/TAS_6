@@ -25,7 +25,6 @@ describe("testing of search form", () => {
       .uncheck({ force: true })
     cy.contains('[data-test="LandingSearchButton"]', 'Search').click()
     cy.wait(4000)
-    //9. overenie ze search button ma spravny attribut href
     cy.get('[data-test="ResultCardWrapper"]')
       .eq(0)
       .find('[data-test="ResultCardPrice"]')
