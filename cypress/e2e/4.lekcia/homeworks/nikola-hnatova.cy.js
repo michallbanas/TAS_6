@@ -1,37 +1,30 @@
-const destination="Oslo" // premennú by som radšej uložil do describe bloku, ale nie je to žiadna chyba
+const destination = "Oslo" // premennú by som radšej uložil do describe bloku, ale nie je to žiadna chyba
 
-describe('testing of search form', () => {
-  it('displaying the correct currency', () => {
-    cy.visit('https://www.kiwi.com/en/?origin=vienna-austria&destination=-')
-    cy.get('[data-test="CookiesPopup-Accept"]')
-      .should('have.text', 'Accept')
-      .click()
-    cy.get('[data-test="CookiesPopup"]').should('not.exist')
+describe("testing of search form", () => {
+  it("displaying the correct currency", () => {
+    cy.visit("https://www.kiwi.com/en/?origin=vienna-austria&destination=-")
+    cy.get('[data-test="CookiesPopup-Accept"]').should("have.text", "Accept").click()
+    cy.get('[data-test="CookiesPopup"]').should("not.exist")
     cy.get('[data-test="TopNav-RegionalSettingsButton"]').click()
     cy.get('[data-test="RegionalSettingsModal"]').should("be.visible")
     cy.get('[data-test="CurrencySelect"]')
-      .should('contain.text','Euro - EUR')
-      .select('Norwegian krone - NOK')
-      .should('have.value', 'nok')
+      .should("contain.text", "Euro - EUR")
+      .select("Norwegian krone - NOK")
+      .should("have.value", "nok")
     cy.get('[data-test="SubmitRegionalSettingsButton"]').click()
-    cy.get('[data-test="TopNav-RegionalSettingsButton"]').should('contain.text', 'NOK')
-    cy.get('[data-test="SearchPlaceField-destination"]')
-      .find('[data-test="SearchField-input"]')
-      .type(destination)
-    cy.get('[data-test="PlacepickerModalOpened-destination"]')
-      .should('be.visible')
-      .contains(destination)
-      .click()
-    cy.url().should('include', 'destination=oslo-norway');
+    cy.get('[data-test="TopNav-RegionalSettingsButton"]').should("contain.text", "NOK")
+    cy.get('[data-test="SearchPlaceField-destination"]').find('[data-test="SearchField-input"]').type(destination)
+    cy.get('[data-test="PlacepickerModalOpened-destination"]').should("be.visible").contains(destination).click()
+    cy.url().should("include", "destination=oslo-norway")
     cy.get('[data-test="bookingCheckbox"]') // iba malý hint, dá sa aj napr. cy.get("[data-test=bookingCheckbox] input")
-      .find('input')
+      .find("input")
       .uncheck({ force: true })
     cy.get('[data-test="LandingSearchButton"]').click() // overil by som aj text buttonu
     cy.wait(4000)
     cy.get('[data-test="ResultCardWrapper"]')
       .eq(0)
       .find('[data-test="ResultCardPrice"]')
-      .should('be.visible')
+      .should("be.visible")
       .and("contain.text", "kr")
   })
 })

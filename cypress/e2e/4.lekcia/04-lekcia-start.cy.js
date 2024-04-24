@@ -1,6 +1,5 @@
 /// <reference types="Cypress" />
 
-
 describe("testing of search form", () => {
   it("should test search form and btns", () => {
     //TODO:

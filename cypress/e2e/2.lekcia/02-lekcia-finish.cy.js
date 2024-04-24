@@ -48,7 +48,7 @@ describe("Gringottbank", () => {
         cy.contains("button", "View Details").click()
       })
 
-    cy.get('div.modal-dialog')
+    cy.get("div.modal-dialog")
       .should("be.visible")
       .within(() => {
         cy.get(".modal-body").contains("p", "Name").should("contain.text", "Jozo")
