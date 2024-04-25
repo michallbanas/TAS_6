@@ -20,7 +20,7 @@ describe("Sorting hat", () => {
 })
 
 describe("Quote generator", () => {
-  it.only("wait for the response", () => {
+  it("wait for the response", () => {
     cy.intercept("**/quote").as("getQuote")
     cy.visit("http://localhost:8080/#/quotes")
     cy.get('[data-test="get-quote"]').click()
