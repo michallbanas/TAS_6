@@ -13,9 +13,9 @@ Napíš nasledovné testy
 3. over hlášku `Mischief managed`
 
 #### Overenie vlastného kúzla
-1. nahraď odpoveď zo servera vlastnou, kde budeš mať práve jedno kúzlo
-2. otvor stránku Spelleology
-3. klikni na názov kúzla
+1. nahraď odpoveď zo servera vlastnou, kde budeš mať práve jedno kúzlo  
+2. otvor stránku Spelleology  
+3. klikni na názov kúzla  
 4. over detail kúzla
 
 ## Kiwi.com
