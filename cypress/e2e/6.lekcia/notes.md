@@ -1,43 +1,44 @@
 # 6 Lekcia - Co sme sa naucili o Intercept
 
-Intercept slúži na sledovanie komuinikácie medzi klientom a serverom.
-Celú dokumenáciu nájdete [na tomto odkaze](https://docs.cypress.io/api/commands/intercept)
+`cy.intercept()` je príkaz v Cypress, ktorý umožňuje interakciu so sieťovou komunikáciou vášho webového testovania. Hlavné funkcie tohto príkazu zahŕňajú:
 
-## Definovanie route
-Ak chceme aby cypress registroval vybranú komunikáciu medzi klientom a serverom, potrebujeme definovať URL na ktorú sa odosielajú requesty
-Príklad
-`cy.intercept('https://auth.skypicker.com/v1/user.exists')`
+- **Čakanie na odpoveď zo servera:** Použitím `cy.intercept()` môžeme sledovať sieťové požiadavky a čakať na ich odpoveď. To umožňuje synchronizáciu testov s dynamickým obsahom zo servera.
 
-Skrátenie URL v prípade ak nám stačí definovať iba relatívnu URL
-`cy.intercept('**/user.exists')`
+- **Nahradenie odpovede zo servera:** Okrem sledovania požiadaviek môžeme tiež nahradzovať odpovede zo servera pomocou `cy.intercept()`. Toto je užitočné na testovanie rôznych scenárov, ako sú chybové stavy alebo situácie so špecifickými dátami.
 
-Vieme ho využiť 3 spôsobmi
+- **Získavanie informácií o komunikácii s backendom:** `cy.intercept()` nám umožňuje získať informácie o komunikácii medzi našou aplikáciou a backendom. To môže zahrňovať detaily o posielaných a prijatých dátach, stavové kódy a ďalšie.
 
-## 1. Čakanie na odpoveď zo servera
-Pridaním aliasu vieme v priebehu testu počkať na odpoveď zo servera
-`cy.intercept('**/user.exists').as('userExists')`
+## Príklad použitia:
 
-Samotné čakanie počas testu
-`cy.wait('@userExists)`
+Tu je príklad použitia `cy.intercept()` v Cypress teste:
 
-[Viac o príkaze cy.wait](https://docs.cypress.io/api/commands/wait)
+```javascript
+describe("Sorting hat", () => {
+  it("čakanie na odpoveď", () => {
+    // Nastavenie interceptu na sledovanie požiadaviek na endpoint **/sortingHat
+    cy.intercept("**/sortingHat").as("sortHat")
+    cy.visit("http://localhost:8080/#/sortingHat")
+    cy.get('[data-test="sort-button"]').click()
+    // Čakanie na odpoveď zo servera pomocou zaregistrovaného aliasu "sortHat"
+    cy.wait("@sortHat")
+    cy.get('[data-test="house-result"]').should("not.be.empty")
+  })
 
-## 2. Nahradenie odpovede
-V prípade, že potrebujeme nahradiť odpoveď zo servera, do metódy `cy.intercept()` doplníme argument, ktorý reprezentuje mockovaný stav
-
-Príklad mockovania chyby na strane servera:
-`cy.intercept('**/user.exists',{statusCode:500}).as('userExists')`
-
-Príklad mockovania statickej odpovede, uloženej v zložke fixtures
-`cy.intercept('**/user.exists',{fixtures:'fake_response.json'}).as('userExists')`
-
-## 3. Overenie komunikácie (request a response)
-Na validáciu komunikácie vieme z funkcie wait vybrať request/response a následne overiť ich hodnoty
-
-Príklad
-```
-cy.wait('@userExists').then(interception => {
-            expect(interception.request.body.email).to.eq(user.name)
-            expect(interception.response.body.exists).to.be.true
-        })
+  it("nahradenie odpovede", () => {
+    // Definovanie vlastnej odpovede zo servera
+    const response = {
+      sortingHatSays: "hello world",
+      house: "Samorin",
+    }
+    // Nastavenie interceptu na nahradenie odpovede na **/sortingHat
+    cy.intercept("**/sortingHat", response).as("sortHat")
+    cy.visit("http://localhost:8080/#/sortingHat")
+    cy.get('[data-test="sort-button"]').click()
+    // Čakanie na odpoveď zo servera pomocou zaregistrovaného aliasu "sortHat"
+    cy.wait("@sortHat")
+    // Overenie, že na stránke sa zobrazí nahradená hláška
+    cy.get('[data-test="result-message"]').should('have.text',sortingHatSays)
+    cy.get('[data-test="house-result"]').should('have.text',house)
+  })
+})
 ```
