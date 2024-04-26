@@ -10,12 +10,13 @@ describe("Sorting hat", () => {
   it("replace the response", () => {
     const response = {
       sortingHatSays: "hello world",
-      house: "Samorin",
+      house: "Prievidza",
     }
     cy.intercept("**/sortingHat", response).as("sortHat")
     cy.visit("http://localhost:8080/#/sortingHat")
     cy.get('[data-test="sort-button"]').click()
     cy.wait("@sortHat")
+    cy.get('[data-test="house-result"]').should("have.text", "Prievidza")
   })
 })
 
