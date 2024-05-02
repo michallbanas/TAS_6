@@ -48,6 +48,8 @@ describe('Spells', () => {
             },
             body: newSpell
         })
+
+        //tu skus vytiahnut z odpovede ID kuzla a nasledne zavolat v then() casti dalsi request - GET, kde overis ze udaje sa vratia spravne
         cy.visit('http://localhost:8080/#/spelleology')
         cy.contains(newSpell.effect).should("be.visible").click()
         cy.contains("h3", newSpell.effect).should("be.visible")
